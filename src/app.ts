@@ -35,32 +35,23 @@ const completedTask = (taskList: TaskList, id: number): TaskList => {
 }
 
 const filterTasks = (taskList: TaskList, filterTask: boolean): TaskList => {
-  const taskFiltered = taskList.filter(task => task.completed === filterTask ? task : null)
+  const taskFiltered = taskList.filter(task => task.completed === filterTask ? task : {})
   return taskFiltered
 }
 
-type TaskList2 = {
-  title: string,
-  completed: boolean
-}
-
-const printTaskList = (taskList: TaskList): TaskList2[] => {
-  const titleAndStateTask = taskList.map(task => {
-    return ({
-      title: task.title,
-      completed: task.completed,
-    })
+function printTaskList(taskList: TaskList): void {
+  taskList.map(task => {
+    console.log(`Title: ${task.title} | Completed: ${task.completed}`)
   })
-  return titleAndStateTask
 }
 
-const runApp = (): TaskList => {
+const runApp = (): void => {
   const newListOfTasks = addTask(list, newTaskToTheList);
 
   const tasksCompleted = completedTask(list, 2);
-
+  console.log(tasksCompleted);
   const completedTasks = filterTasks(list, true);
-  return newListOfTasks || tasksCompleted || completedTasks
+  printTaskList(completedTasks)
 }
 
-console.log(runApp())
+runApp()
